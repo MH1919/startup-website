@@ -1,103 +1,55 @@
-import Image from "next/image";
+import React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-[#18181b] text-zinc-100 flex flex-col font-sans">
+      {/* Hero Section */}
+      <section className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 text-center bg-gradient-to-b from-[#18181b] to-[#232323] overflow-hidden">
+        {/* Glow/Accent */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <div className="w-[600px] h-[600px] bg-yellow-400/10 rounded-full blur-3xl" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+        <h1 className="relative z-10 text-5xl md:text-7xl font-extrabold mb-6 text-yellow-400 drop-shadow-[0_2px_24px_rgba(250,202,21,0.25)] tracking-tight leading-tight">
+          Build with AI
+        </h1>
+        <p className="relative z-10 max-w-2xl mx-auto text-xl md:text-2xl text-zinc-300 mb-10 font-light">
+          Welcome to <span className="text-yellow-400 font-semibold">Switch Dimension</span> — your partner in AI training, web app & agent development, and a thriving AI community. Empower your business and skills with the latest in AI technology.
+        </p>
+        <Link href="#signup" className="relative z-10 inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-yellow-400 text-zinc-900 font-extrabold text-xl shadow-xl hover:bg-yellow-300 transition-all focus:ring-4 focus:ring-yellow-500/40">
+          Sign Up Now <ArrowRight size={26} />
+        </Link>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 bg-[#232323]">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 text-center">
+          <div className="bg-gradient-to-b from-[#232323] to-[#18181b] rounded-2xl p-10 shadow-xl border border-zinc-800 hover:border-yellow-400 transition-all">
+            <h2 className="text-2xl font-bold mb-3 text-yellow-300 tracking-tight">AI Training</h2>
+            <p className="text-zinc-300 text-lg font-light">
+              Hands-on courses and workshops to master AI development, from fundamentals to advanced topics.
+            </p>
+          </div>
+          <div className="bg-gradient-to-b from-[#232323] to-[#18181b] rounded-2xl p-10 shadow-xl border border-zinc-800 hover:border-yellow-400 transition-all">
+            <h2 className="text-2xl font-bold mb-3 text-yellow-300 tracking-tight">Web Apps & Agents</h2>
+            <p className="text-zinc-300 text-lg font-light">Build, deploy, and scale AI-powered web apps and intelligent agents with expert guidance.</p>
+          </div>
+          <div className="bg-gradient-to-b from-[#232323] to-[#18181b] rounded-2xl p-10 shadow-xl border border-zinc-800 hover:border-yellow-400 transition-all">
+            <h2 className="text-2xl font-bold mb-3 text-yellow-300 tracking-tight">Community</h2>
+            <p className="text-zinc-300 text-lg font-light">Join a vibrant community of AI enthusiasts, developers, and innovators. Share, learn, and grow together.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Signup Section */}
+      <section id="signup" className="py-24 px-4 bg-[#18181b] border-t border-zinc-800 text-center">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-yellow-400 tracking-tight">Ready to get started?</h2>
+        <p className="text-zinc-300 mb-10 text-lg font-light">Sign up to access our training, tools, and community.</p>
+        <a href="#" className="inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-yellow-400 text-zinc-900 font-extrabold text-xl shadow-xl hover:bg-yellow-300 transition-all focus:ring-4 focus:ring-yellow-500/40">
+          Join Switch Dimension <ArrowRight size={26} />
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
     </div>
   );
 }
