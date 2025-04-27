@@ -1,25 +1,24 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { WavyBackground } from "@/components/ui/wavy-background";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#18181b] text-zinc-100 flex flex-col font-sans">
-      {/* Hero Section */}
-      <section className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 text-center bg-gradient-to-b from-[#18181b] to-[#232323] overflow-hidden">
-        {/* Glow/Accent */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[600px] h-[600px] bg-yellow-400/10 rounded-full blur-3xl" />
-        </div>
-        <h1 className="relative z-10 text-5xl md:text-7xl font-extrabold mb-6 text-yellow-400 drop-shadow-[0_2px_24px_rgba(250,202,21,0.25)] tracking-tight leading-tight">
-          Build with AI
-        </h1>
-        <p className="relative z-10 max-w-2xl mx-auto text-xl md:text-2xl text-zinc-300 mb-10 font-light">
-          Welcome to <span className="text-yellow-400 font-semibold">Switch Dimension</span> — your partner in AI training, web app & agent development, and a thriving AI community. Empower your business and skills with the latest in AI technology.
-        </p>
-        <Link href="#signup" className="relative z-10 inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-yellow-400 text-zinc-900 font-extrabold text-xl shadow-xl hover:bg-yellow-300 transition-all focus:ring-4 focus:ring-yellow-500/40">
-          Sign Up Now <ArrowRight size={26} />
-        </Link>
+      {/* Hero Section with WavyBackground */}
+      <section className="relative flex-1 flex flex-col items-center justify-center px-0 py-0 text-center bg-transparent overflow-hidden">
+        <WavyBackground className="max-w-4xl mx-auto pb-40">
+          <h1 className="relative z-10 text-5xl md:text-7xl font-extrabold mb-6 text-yellow-400 drop-shadow-[0_2px_24px_rgba(250,202,21,0.25)] tracking-tight leading-tight">
+            Build with AI
+          </h1>
+          <p className="relative z-10 max-w-2xl mx-auto text-xl md:text-2xl text-zinc-300 mb-10 font-light">
+            Welcome to <span className="text-yellow-400 font-semibold">Switch Dimension</span> — your partner in AI training, web app & agent development, and a thriving AI community. Empower your business and skills with the latest in AI technology.
+          </p>
+          <Link href="#signup" className="relative z-10 inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-yellow-400 text-zinc-900 font-extrabold text-xl shadow-xl hover:bg-yellow-300 transition-all focus:ring-4 focus:ring-yellow-500/40">
+            Sign Up Now <ArrowRight size={26} />
+          </Link>
+        </WavyBackground>
       </section>
 
       {/* Features Section */}
