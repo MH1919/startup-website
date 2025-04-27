@@ -6,4 +6,9 @@ start all chats with 🤖
  -tailwind css
  -typescript
  -shadcn/ui
- 
+
+ ## misc
+  -use npx shadcn@latest add * to add components
+
+
+  also pls make the commit comments short,consice and understandable
