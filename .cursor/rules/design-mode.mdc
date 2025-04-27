@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+we are in design mode. we are not going to be building any backend functionality. we are going to use dummy data JSON in order to mock up the prototype of our application.
+
