@@ -1,11 +1,49 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
 import { Home, FileText, Table, FileInput, Folders, Calendar } from "lucide-react";
 
+// Memoize the table data
+const tableData = [
+  { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
+  { name: "Emma", last: "Johnson", phone: "622322662", email: "jonsmith@mail.com" },
+  { name: "Oliver", last: "Williams", phone: "622322662", email: "jonsmith@mail.com" },
+  { name: "Isabella", last: "Brown", phone: "622322662", email: "jonsmith@mail.com" },
+  { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
+];
+
+// Memoize the chart data
+const barChartData = [
+  { name: "Red", votes: 12 },
+  { name: "Blue", votes: 18 },
+  { name: "Yellow", votes: 3 },
+  { name: "Green", votes: 5 },
+  { name: "Purple", votes: 2 },
+  { name: "Orange", votes: 4 },
+];
+
+const lineChartData = [
+  { name: "Red", votes: 17 },
+  { name: "Blue", votes: 19 },
+  { name: "Yellow", votes: 7 },
+  { name: "Green", votes: 2 },
+  { name: "Purple", votes: 1 },
+  { name: "Orange", votes: 2 },
+];
+
 export default function DashboardPage() {
+  // Memoize the sidebar navigation items
+  const navItems = useMemo(() => [
+    { icon: <Home size={18} color="#fde047" />, label: "Dashboard" },
+    { icon: <FileText size={18} color="#fde047" />, label: "Blank Page" },
+    { icon: <Table size={18} color="#fde047" />, label: "Tables" },
+    { icon: <FileInput size={18} color="#fde047" />, label: "Forms" },
+    { icon: <Folders size={18} color="#fde047" />, label: "Tabbed Content" },
+    { icon: <Calendar size={18} color="#fde047" />, label: "Calendar" },
+  ], []);
+
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       {/* Sidebar */}
@@ -15,25 +53,24 @@ export default function DashboardPage() {
           <div className="px-4">
             <Button className="w-full mb-4 bg-zinc-800 text-zinc-200 font-semibold hover:bg-zinc-700">+ New Report</Button>
           </div>
-          <nav className="flex-1">
-            <ul className="space-y-1 px-2">
-              <li className="bg-[#232323] rounded text-zinc-100 font-semibold px-4 py-2 flex items-center gap-3">
-                <Home size={18} color="#fde047" /> Dashboard
+          <ul className="space-y-1 px-2">
+            {navItems.map((item, index) => (
+              <li 
+                key={index} 
+                className={`${index === 0 ? 'bg-[#232323]' : 'hover:bg-[#232323]'} rounded px-4 py-2 cursor-pointer flex items-center gap-3 transition-colors duration-200`}
+              >
+                {item.icon} {item.label}
               </li>
-              <li className="hover:bg-[#232323] rounded px-4 py-2 cursor-pointer flex items-center gap-3"><FileText size={18} color="#fde047"/> Blank Page</li>
-              <li className="hover:bg-[#232323] rounded px-4 py-2 cursor-pointer flex items-center gap-3"><Table size={18} color="#fde047"/> Tables</li>
-              <li className="hover:bg-[#232323] rounded px-4 py-2 cursor-pointer flex items-center gap-3"><FileInput size={18} color="#fde047"/> Forms</li>
-              <li className="hover:bg-[#232323] rounded px-4 py-2 cursor-pointer flex items-center gap-3"><Folders size={18} color="#fde047"/> Tabbed Content</li>
-              <li className="hover:bg-[#232323] rounded px-4 py-2 cursor-pointer flex items-center gap-3"><Calendar size={18} color="#fde047"/> Calendar</li>
-            </ul>
-          </nav>
+            ))}
+          </ul>
         </div>
         <div className="px-4 py-6">
           <Button className="w-full bg-yellow-500 text-zinc-900 font-semibold hover:bg-yellow-600">Upgrade to Pro!</Button>
         </div>
       </aside>
+
       {/* Main Content */}
-      <main className="flex-1 p-8 bg-[#232323] text-foreground">
+      <main className="flex-1 p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-semibold text-yellow-400">Dashboard</h1>
@@ -42,23 +79,16 @@ export default function DashboardPage() {
             <AvatarFallback>JS</AvatarFallback>
           </Avatar>
         </div>
+
         {/* Charts */}
         <div className="grid grid-cols-2 gap-6 mb-8">
           <div className="bg-zinc-900 rounded-lg shadow p-6">
             <div className="flex items-center gap-2 mb-2 font-semibold text-zinc-200">
               <span className="material-icons text-base">add</span> Monthly Reports
             </div>
-            {/* Bar Chart */}
             <div className="h-48 bg-zinc-800 rounded">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={[
-                  { name: "Red", votes: 12 },
-                  { name: "Blue", votes: 18 },
-                  { name: "Yellow", votes: 3 },
-                  { name: "Green", votes: 5 },
-                  { name: "Purple", votes: 2 },
-                  { name: "Orange", votes: 4 },
-                ]}>
+                <BarChart data={barChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
                   <XAxis dataKey="name" stroke="#e4e4e7" />
                   <YAxis stroke="#e4e4e7" />
@@ -69,21 +99,14 @@ export default function DashboardPage() {
               </ResponsiveContainer>
             </div>
           </div>
+
           <div className="bg-zinc-900 rounded-lg shadow p-6">
             <div className="flex items-center gap-2 mb-2 font-semibold text-zinc-200">
               <span className="material-icons text-base">check</span> Resolved Reports
             </div>
-            {/* Line Chart */}
             <div className="h-48 bg-zinc-800 rounded">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={[
-                  { name: "Red", votes: 17 },
-                  { name: "Blue", votes: 19 },
-                  { name: "Yellow", votes: 7 },
-                  { name: "Green", votes: 2 },
-                  { name: "Purple", votes: 1 },
-                  { name: "Orange", votes: 2 },
-                ]}>
+                <LineChart data={lineChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
                   <XAxis dataKey="name" stroke="#e4e4e7" />
                   <YAxis stroke="#e4e4e7" />
@@ -95,6 +118,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+
         {/* Latest Reports Table */}
         <div className="bg-zinc-900 rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4 font-semibold text-zinc-200">
@@ -111,14 +135,8 @@ export default function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
-                  { name: "Emma", last: "Johnson", phone: "622322662", email: "jonsmith@mail.com" },
-                  { name: "Oliver", last: "Williams", phone: "622322662", email: "jonsmith@mail.com" },
-                  { name: "Isabella", last: "Brown", phone: "622322662", email: "jonsmith@mail.com" },
-                  { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
-                ].map((row, i) => (
-                  <tr key={i} className={`${i % 2 === 0 ? 'bg-[#18181b]' : 'bg-zinc-800'} text-zinc-100 hover:bg-zinc-800 transition-colors`}>
+                {tableData.map((row, i) => (
+                  <tr key={i} className={`${i % 2 === 0 ? 'bg-[#18181b]' : 'bg-zinc-800'} text-zinc-100 hover:bg-zinc-800 transition-colors duration-200`}>
                     <td className="px-4 py-2">{row.name}</td>
                     <td className="px-4 py-2">{row.last}</td>
                     <td className="px-4 py-2">{row.phone}</td>

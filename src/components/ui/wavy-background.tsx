@@ -38,26 +38,32 @@ export const WavyBackground = ({
   const getSpeed = () => {
     switch (speed) {
       case "slow":
-        return 0.001;
+        return 0.0005;
       case "fast":
-        return 0.002;
-      default:
         return 0.001;
+      default:
+        return 0.0005;
     }
   };
 
   const init = () => {
     canvas = canvasRef.current;
-    ctx = canvas.getContext("2d");
+    ctx = canvas.getContext("2d", { alpha: false });
     w = ctx.canvas.width = window.innerWidth;
     h = ctx.canvas.height = window.innerHeight;
     ctx.filter = `blur(${blur}px)`;
     nt = 0;
+    
+    let resizeTimeout: NodeJS.Timeout;
     window.onresize = function () {
-      w = ctx.canvas.width = window.innerWidth;
-      h = ctx.canvas.height = window.innerHeight;
-      ctx.filter = `blur(${blur}px)`;
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        w = ctx.canvas.width = window.innerWidth;
+        h = ctx.canvas.height = window.innerHeight;
+        ctx.filter = `blur(${blur}px)`;
+      }, 100);
     };
+    
     render();
   };
 
@@ -74,9 +80,9 @@ export const WavyBackground = ({
       ctx.beginPath();
       ctx.lineWidth = waveWidth || 50;
       ctx.strokeStyle = waveColors[i % waveColors.length];
-      for (x = 0; x < w; x += 5) {
+      for (x = 0; x < w; x += 10) {
         var y = noise(x / 800, 0.3 * i, nt) * 100;
-        ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
+        ctx.lineTo(x, y + h * 0.5);
       }
       ctx.stroke();
       ctx.closePath();
@@ -84,16 +90,22 @@ export const WavyBackground = ({
   };
 
   let animationId: number;
-  const render = () => {
-    ctx.fillStyle = backgroundFill || "black";
-    ctx.globalAlpha = waveOpacity || 0.5;
-    ctx.fillRect(0, 0, w, h);
-    drawWave(5);
+  let lastTime = 0;
+  const render = (currentTime?: number) => {
+    const now = currentTime || performance.now();
+    if (now - lastTime >= 1000 / 30) {
+      ctx.fillStyle = backgroundFill || "black";
+      ctx.globalAlpha = waveOpacity || 0.5;
+      ctx.fillRect(0, 0, w, h);
+      drawWave(5);
+      lastTime = now;
+    }
     animationId = requestAnimationFrame(render);
   };
 
   useEffect(() => {
     init();
+    render();
     return () => {
       cancelAnimationFrame(animationId);
     };
