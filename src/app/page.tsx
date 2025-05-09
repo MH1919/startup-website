@@ -1,9 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import dynamic from 'next/dynamic';
 import { WavyBackground } from "@/components/ui/wavy-background";
-import { Testimonials } from "@/components/testimonials";
-import { TechStack } from "@/components/tech-stack";
+
+// Lazy load components
+const Testimonials = dynamic(() => import('@/components/testimonials').then(mod => mod.Testimonials), {
+  loading: () => <div className="h-96 bg-zinc-800 rounded animate-pulse" />
+});
+const TechStack = dynamic(() => import('@/components/tech-stack').then(mod => mod.TechStack), {
+  loading: () => <div className="h-96 bg-zinc-800 rounded animate-pulse" />
+});
 
 export default function Home() {
   return (
@@ -56,10 +64,14 @@ export default function Home() {
       </section>
 
       {/* Tech Stack Section */}
-      <TechStack />
+      <Suspense fallback={<div className="h-96 bg-zinc-800 rounded animate-pulse" />}>
+        <TechStack />
+      </Suspense>
 
       {/* Testimonials Section */}
-      <Testimonials />
+      <Suspense fallback={<div className="h-96 bg-zinc-800 rounded animate-pulse" />}>
+        <Testimonials />
+      </Suspense>
 
       {/* Signup Section */}
       <section id="signup" className="py-24 px-4 bg-[#18181b] border-t border-zinc-800 text-center">
