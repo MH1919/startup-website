@@ -1,37 +1,46 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
+import dynamic from 'next/dynamic';
 import { Home, FileText, Table, FileInput, Folders, Calendar } from "lucide-react";
+import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line, ResponsiveContainer } from 'recharts';
 
-// Memoize the table data
-const tableData = [
+// Dynamically import charts with loading fallback
+const BarChart = dynamic(() => import('recharts').then(mod => mod.BarChart), {
+  loading: () => <div className="h-48 bg-zinc-800 rounded animate-pulse" />
+});
+const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), {
+  loading: () => <div className="h-48 bg-zinc-800 rounded animate-pulse" />
+});
+
+// Memoize static data
+const tableData = useMemo(() => [
   { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
   { name: "Emma", last: "Johnson", phone: "622322662", email: "jonsmith@mail.com" },
   { name: "Oliver", last: "Williams", phone: "622322662", email: "jonsmith@mail.com" },
   { name: "Isabella", last: "Brown", phone: "622322662", email: "jonsmith@mail.com" },
   { name: "Lian", last: "Smith", phone: "622322662", email: "jonsmith@mail.com" },
-];
+], []);
 
-// Memoize the chart data
-const barChartData = [
-  { name: "Red", votes: 12 },
-  { name: "Blue", votes: 18 },
-  { name: "Yellow", votes: 3 },
-  { name: "Green", votes: 5 },
-  { name: "Purple", votes: 2 },
-  { name: "Orange", votes: 4 },
-];
-
-const lineChartData = [
-  { name: "Red", votes: 17 },
-  { name: "Blue", votes: 19 },
-  { name: "Yellow", votes: 7 },
-  { name: "Green", votes: 2 },
-  { name: "Purple", votes: 1 },
-  { name: "Orange", votes: 2 },
-];
+const chartData = useMemo(() => ({
+  barChartData: [
+    { name: "Red", votes: 12 },
+    { name: "Blue", votes: 18 },
+    { name: "Yellow", votes: 3 },
+    { name: "Green", votes: 5 },
+    { name: "Purple", votes: 2 },
+    { name: "Orange", votes: 4 },
+  ],
+  lineChartData: [
+    { name: "Red", votes: 17 },
+    { name: "Blue", votes: 19 },
+    { name: "Yellow", votes: 7 },
+    { name: "Green", votes: 2 },
+    { name: "Purple", votes: 1 },
+    { name: "Orange", votes: 2 },
+  ]
+}), []);
 
 export default function DashboardPage() {
   // Memoize the sidebar navigation items
@@ -86,9 +95,9 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2 mb-2 font-semibold text-zinc-200">
               <span className="material-icons text-base">add</span> Monthly Reports
             </div>
-            <div className="h-48 bg-zinc-800 rounded">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barChartData}>
+            <Suspense fallback={<div className="h-48 bg-zinc-800 rounded animate-pulse" />}>
+              <div className="h-48 bg-zinc-800 rounded">
+                <BarChart data={chartData.barChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
                   <XAxis dataKey="name" stroke="#e4e4e7" />
                   <YAxis stroke="#e4e4e7" />
@@ -96,17 +105,17 @@ export default function DashboardPage() {
                   <Legend wrapperStyle={{ color: '#fde047' }} />
                   <Bar dataKey="votes" fill="#fde047" radius={[6, 6, 0, 0]} />
                 </BarChart>
-              </ResponsiveContainer>
-            </div>
+              </div>
+            </Suspense>
           </div>
 
           <div className="bg-zinc-900 rounded-lg shadow p-6">
             <div className="flex items-center gap-2 mb-2 font-semibold text-zinc-200">
               <span className="material-icons text-base">check</span> Resolved Reports
             </div>
-            <div className="h-48 bg-zinc-800 rounded">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={lineChartData}>
+            <Suspense fallback={<div className="h-48 bg-zinc-800 rounded animate-pulse" />}>
+              <div className="h-48 bg-zinc-800 rounded">
+                <LineChart data={chartData.lineChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
                   <XAxis dataKey="name" stroke="#e4e4e7" />
                   <YAxis stroke="#e4e4e7" />
@@ -114,8 +123,8 @@ export default function DashboardPage() {
                   <Legend wrapperStyle={{ color: '#fde047' }} />
                   <Line type="monotone" dataKey="votes" stroke="#fde047" strokeWidth={3} dot={{ r: 4, fill: '#fde047' }} activeDot={{ r: 6, fill: '#fde047' }} />
                 </LineChart>
-              </ResponsiveContainer>
-            </div>
+              </div>
+            </Suspense>
           </div>
         </div>
 

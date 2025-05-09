@@ -93,11 +93,11 @@ export const WavyBackground = ({
   let lastTime = 0;
   const render = (currentTime?: number) => {
     const now = currentTime || performance.now();
-    if (now - lastTime >= 1000 / 30) {
+    if (now - lastTime >= 1000 / 20) {
       ctx.fillStyle = backgroundFill || "black";
       ctx.globalAlpha = waveOpacity || 0.5;
       ctx.fillRect(0, 0, w, h);
-      drawWave(5);
+      drawWave(3);
       lastTime = now;
     }
     animationId = requestAnimationFrame(render);
@@ -108,6 +108,32 @@ export const WavyBackground = ({
     render();
     return () => {
       cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            cancelAnimationFrame(animationId);
+          } else {
+            render();
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      observer.observe(canvas);
+    }
+
+    return () => {
+      if (canvas) {
+        observer.unobserve(canvas);
+      }
     };
   }, []);
 

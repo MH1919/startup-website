@@ -3,8 +3,18 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { useMemo } from "react";
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/features", label: "Features" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
+];
 
 export default function Header() {
+  const memoizedNavItems = useMemo(() => navItems, []);
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-transparent" />
@@ -16,18 +26,15 @@ export default function Header() {
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105">
-              Home
-            </Link>
-            <Link href="/features" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105">
-              Pricing
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105">
-              About
-            </Link>
+            {memoizedNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
         <div className="flex items-center gap-4">

@@ -1,11 +1,12 @@
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 const testimonials = [
   {
     name: "Sarah Chen",
     role: "AI Developer",
     company: "TechCorp",
-    image: "/testimonials/sarah.jpg",
+    image: "https://randomuser.me/api/portraits/women/32.jpg",
     content: "The AI training program transformed my career. The hands-on approach and real-world projects helped me land my dream job in AI development.",
     rating: 5
   },
@@ -13,7 +14,7 @@ const testimonials = [
     name: "Michael Rodriguez",
     role: "Startup Founder",
     company: "AI Solutions",
-    image: "/testimonials/michael.jpg",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
     content: "Building our AI-powered web app with Switch Dimension's guidance was a game-changer. Their expertise in AI agents helped us scale rapidly.",
     rating: 5
   },
@@ -21,7 +22,7 @@ const testimonials = [
     name: "Emma Thompson",
     role: "Data Scientist",
     company: "InnovateAI",
-    image: "/testimonials/emma.jpg",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
     content: "The community support and resources available here are unmatched. I've grown both professionally and personally through this platform.",
     rating: 5
   }
@@ -38,8 +39,16 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-gradient-to-b from-[#232323] to-[#18181b] rounded-2xl p-8 shadow-xl border border-zinc-800 hover:border-yellow-400 transition-all">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-yellow-400/20 flex items-center justify-center">
-                  <span className="text-yellow-400 font-bold text-lg">{testimonial.name.charAt(0)}</span>
+                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-yellow-400/20">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    fill
+                    sizes="(max-width: 48px) 100vw, 48px"
+                    className="object-cover"
+                    loading="lazy"
+                    unoptimized
+                  />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-yellow-300">{testimonial.name}</h3>
